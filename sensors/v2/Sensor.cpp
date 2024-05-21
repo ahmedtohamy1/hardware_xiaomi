@@ -311,7 +311,7 @@ void SysfsPollingOneShotSensor::run() {
                 continue;
             }
 
-            if (mPolls[1].revents == mPolls[1].events && readBool(mPollFd, true /* seek */)) {
+            if (mPolls[1].revents == mPolls[1].events && readFd(mPollFd)) {
                 activate(false, false, false);
                 mCallback->postEvents(readEvents(), isWakeUpSensor());
             } else if (mPolls[0].revents == mPolls[0].events) {
@@ -347,6 +347,10 @@ void SysfsPollingOneShotSensor::fillEventData(Event& event) {
 void UdfpsSensor::fillEventData(Event& event) {
     event.u.data[0] = mScreenX;
     event.u.data[1] = mScreenY;
+}
+
+bool SysfsPollingOneShotSensor::readFd(const int fd) {
+    return readBool(fd, true /* seek */);
 }
 
 bool UdfpsSensor::readFd(const int fd) {
