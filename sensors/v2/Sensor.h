@@ -144,7 +144,9 @@ class UdfpsSensor : public SysfsPollingOneShotSensor {
     UdfpsSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
                 sensorHandle, callback, "/sys/class/touch/touch_dev/fod_press_status",
-                "UDFPS Sensor", "org.yaap.sensor.udfps",
+                "/sys/devices/platform/goodix_ts.0/gesture/fod_en", "UDFPS Sensor",
+                "/sys/devices/platform/goodix_ts.0/udfps_enabled", "org.yaap.sensor.udfps",
+                "/sys/devices/platform/goodix_ts.0/udfps_pressed",
                   static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) +3)) {}
     virtual void fillEventData(Event& event);
     virtual bool readFd(const int fd);
